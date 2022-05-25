@@ -1,0 +1,198 @@
+# Create a new repository on the command line
+ 
+touch README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/c0ldlimit/vimcolors.git
+git push -u origin <master or main> 
+ 
+# Push an existing repository from the command line
+ 
+git remote add origin https://github.com/c0ldlimit/vimcolors.git
+git push -u origin master
+
+
+git init					//to initiaze your working directory as the repository
+
+git status					//to see the status of your branch
+
+git checkout -b <branch_name>		//to create and switch to a branch in one go. Branch name take the form; feat/<feature-added> or fix/<fix-added>. remember no space.
+
+git branch <branch_name>		//just create a branch
+
+git branch					//list all branch
+
+git checkout <branch_name>		//switch branch
+
+git branch -d <branch_name>		//delete branch
+
+git add <filename>			//to file to staging area. ready for commit
+
+git add .					//stage the current directory
+
+git commit -m "<commit_message>"	//commit change. -m flag is for commit message. the commit message take the form feat: <add <features added>> or fix: <fix <fix done>>
+
+git reset					//you can use this cmd to travel to any point in your commit history to remove or undo commit. 
+
+
+git reset HEAD~1				//Your current HEAD is a reference to the last commit you just made. "git reset HEAD~1 to go back on before HEAD.
+						//So when you reset to one commit before HEAD, it removed the most recent commit, and put all the changes in the working tree.
+						//If you used the "--hard" flag with the reset, the change would have not been added to the working tree.
+
+git revert HEAD				//You can revert the most recent commit ( HEAD ) with this cmd. Reverting is a good way to undo a commit because you don't lose the commit from the history.
+						//Git put you into Nano and is asking you enter a commit message for the revert. but they added a default one for you. use it by pressing ctrl + x.
+
+git show 					//view the last commit added (now HEAD ) and its details.
+
+git show HEAD~1				//view the detail of the one before HEAD.
+
+git log					// check your commit history
+
+git log --oneline				//the --oneline flag display the histories in one line
+
+git log -#					//e.g git log -1, git log -2 to view a particular commit history.
+
+git log -# --oneline			//both number and --oneline can be combine.
+
+git diff					//show the change made in the files
+
+git merge <branch_name>			//to merge a branches. remember you must be in the branch you want merge to.
+
+git rebase <branch_name_1>		//you are branch_name_2 and a commit have been merge to branch_name_1 from Branch_name_3.
+						//In order to register those change to branch_name_2 you run rebase.
+						//Note if there is a conflict with the changes git will call your attention. remove the <<, >> and == sign and run rebase with --continue flag.
+
+git rebase --continue			//run after conflict is fixed. make you stage and use "git status" to see that the conflict if fixed before you run this command
+
+git rebase --interactive HEAD~2	//enter an interactive mode to manipulate commits. The HEAD~2 mean you will have a chance to change the last two commits.
+						//git open Nano. AT the top of Nano, you can see the two commits with pick next to them. Below them, there's a list of options for working with them.
+						//"pick" means that it will use the commits as they were. At the bottom, it says, "d, drop = remove commit".
+						//e.g To drop them, replace the word "pick" proceeding your two commits with a "d" to drop them both. save file and exit Nano.
+
+git rebase --interactive --root	//"--root" means that the rebase will go back to your very first commit
+						//Here the last commit is at the bottom. of the option is "r, reword = use commit, but edit the commit message".
+						//e.g To edit a commit message, replace the "pick" in any commit meassage you wnat to edit. save file and exit Nano. git will put you in another Nano instance to reword the commit message.
+						//e.g To squash commits into on commit use replace "pick" with "s" for the commit you want squashed. leave aleast one commit message, probably the first commit for this branch. save file and exit nano. git will
+						//put in another Nano. you can just exit the nano to use the commit message you left as the squash name for the commits.
+						
+
+//******************************************************************************************//
+
+When you do an interactive rebase to the root, the commit hash is re-compute for the commit history. So when
+you rebase interactively it change all those hashes, so git sees them as different commits. if 
+you to try and merge this into "main", it wouldn't work because they don't share the same history
+anymore. For this reason, you don't want to do an interactive rebase where you go back passed commits
+unique to the branch you are on. Fortunately, you can fix this with "git rebase main" to realign the 
+history of the two branhes.
+
+//**********************************************************************************************// 
+
+git stash					//stash your changes so you can add them to a different branch.
+
+git stash list				//view things you have stashed.
+
+git stash pop				//bring the changes back. the most recent. you can use it to pop a stash in another branch other than the one it was stashed.
+
+git stash show				//view condense version of stash.
+
+git stash show -p 			//view the full change of the latest stash.
+
+git stash apply				//add the latest stash while keeping it in the list.
+
+git stash pop <stash_name>		//note you can use the name in front (stash@{0}, stash@{1}) to target a stash other than the latest one. it can be with other stash cmd.
+
+git stash drop or git stash drop <stash_name>		//to drop a stash.
+
+//*************************************************************************************************************************************************************************************************************************************************************************//
+
+git rm <file_name>			// remove file from repo.
+
+git rm --cached <file_name>		//Sometimes you want to remove files from the Git but keep the files in your local repository. In other words, you do not want to share your file on Git. 
+						//Git allows you to do so. The cached option is used in this case. It specifies that the removal operation will only act on the staging index, not on the repository.
+
+git reset HEAD or git reset --hard or  git checkout   //Execution of git rm command is not permanent; it can be reverted after execution. These changes cannot be persisted until a new commit is made on the repository. We can undo the git rm command. 
+
+git remote					//To check the configuration of the remote server, run the git remote command. The git remote command allows accessing the connection between remote and local. If you want to see the original existence of your cloned repository, use the git remote command.
+
+git remote -v or git remote --verbose		//Git remote supports a specific option -v to show the URLs that Git has stored as a short name. These short names are used during the reading and write operation. 
+
+git remote add <short name><remote URL>  //When we fetch a repository implicitly, git adds a remote for the repository. Also, we can explicitly add a remote for a repository. We can add a remote as a shot nickname or short name.
+							//e.g "git remote add hw https://github.com/abdamsab/hello-world. you use hw in place of the remote url.
+
+git remote rm <destination>  or git remote remove <destination>  //You can remove a remote connection from a repository. To remove a connection, perform the git remote command with remove or rm option.
+											//e.g "git remote rm origin" remove the removed origin from your repo.
+
+git remote rename <old name><new name>  	//Git allows renaming the remote server name so that you can use a short name in place of the remote server name. 
+
+git remote show <remote>  			//
+
+git remote set-url <remote name><newURL>  //We can change the remote URL simply by using the git remote set command. Suppose we want to make a unique name for our project to specify it. Git allows us to do so. It is a simple process.
+
+//**********************************************************//
+
+Set a Git username:
+
+$ git config --global user.name "Mona Lisa"
+
+Confirm that you have set the Git username correctly:
+
+$ git config --global user.name
+> Mona Lisa
+
+//********************************************************//
+
+    Open Git Bash.
+
+    Change the current working directory to the local repository where you want to configure the name that is associated with your Git commits.
+
+    Set a Git username:
+
+    $ git config user.name "Mona Lisa"
+
+    Confirm that you have set the Git username correctly:
+
+    $ git config user.name
+    > Mona Lisa
+
+//****************************************************//
+
+Setting your email address for every repository on your computer
+
+    Open Terminal.
+    Set an email address in Git. You can use your GitHub-provided no-reply email address or any email address.
+
+    $ git config --global user.email "email@example.com"
+
+    Confirm that you have set the email address correctly in Git:
+
+    $ git config --global user.email
+    email@example.com
+
+    Add the email address to your account on GitHub, so that your commits are attributed to you and appear in your contributions graph. 
+    For more information, see "Adding an email address to your GitHub account."
+
+//******************************************************************************************************************************************************************************************************//
+
+Setting your email address for a single repository
+
+GitHub uses the email address set in your local Git configuration to associate commits pushed from the command line with your account on GitHub.com.
+
+You can change the email address associated with commits you make in a single repository. This will override your global Git configuration settings in this one repository, but will not affect any other repositories.
+
+    Open Terminal.
+    Change the current working directory to the local repository where you want to configure the email address that you associate with your Git commits.
+    Set an email address in Git. You can use your GitHub-provided no-reply email address or any email address.
+
+    $ git config user.email "email@example.com"
+
+    Confirm that you have set the email address correctly in Git:
+
+    $ git config user.email
+    email@example.com
+
+    Add the email address to your account on GitHub, so that your commits are attributed to you and appear in your contributions graph. 
+For more information, see "Adding an email address to your GitHub account."
+
+//*******************************************************************************************************************************************************//
+
